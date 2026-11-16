@@ -1,28 +1,36 @@
-# Si Catat - Aplikasi Pengelolaan Uang
+<div align="center">
+  <img src="assets/images/logo-rounded.png" alt="Logo Si Catat" width="130" style="border-radius: 20px;" />
 
-Aplikasi manajemen dan pencatatan keuangan pribadi berbasis Flutter dengan backend Google Apps Script (GAS) dan Google Sheets sebagai database.
+  # Si Catat
 
----
+  **Aplikasi Manajemen & Pengelolaan Uang Pribadi**
 
-## 🚀 Fitur Utama
-- **Autentikasi Pengguna**: Registrasi, Login, dan Fitur Pemulihan Password via Email.
-- **Pencatatan Transaksi**: Catat pemasukan dan pengeluaran beserta kategori, jumlah, dan deskripsi.
-- **Riwayat & Filter**: Riwayat transaksi lengkap dengan filter berdasarkan tipe dan tanggal.
-- **Dashboard Ringkasan**: Visualisasi total pemasukan, pengeluaran, dan saldo bersih.
-- **Serverless Backend**: Menggunakan Google Apps Script terhubung langsung ke Google Sheets.
+  <p>Aplikasi pencatatan keuangan pribadi berbasis Flutter dengan backend serverless Google Apps Script dan Google Sheets sebagai database.</p>
+</div>
 
 ---
 
-## 🛠️ Tech Stack
-- **Frontend**: Flutter (Dart)
-- **State Management & Architecture**: Provider & MVC/Service Pattern
-- **Storage**: SharedPreferences (local cache)
-- **Backend API**: Google Apps Script (Web App)
-- **Database**: Google Sheets
+## 📋 Fitur Utama
+
+- 🔐 **Autentikasi Pengguna**: Registrasi, Login, dan Fitur Pemulihan Password via Email.
+- 💰 **Pencatatan Transaksi**: Catat pemasukan dan pengeluaran beserta kategori/sumber, nominal, dan deskripsi.
+- 📅 **Riwayat & Filter**: Riwayat transaksi lengkap dengan filter berdasarkan tipe transaksi dan periode bulan/tahun.
+- 📊 **Dashboard Ringkasan**: Tampilan visual total pemasukan, pengeluaran, dan saldo keuangan secara real-time.
+- ☁️ **Serverless Backend**: Menggunakan Google Apps Script terhubung langsung ke spreadsheet Google Sheets.
 
 ---
 
-## ⚙️ Panduan Setup Backend (Google Apps Script)
+## 💻 Tech Stack & Arsitektur
+
+- 📱 **Frontend**: Flutter (Dart)
+- 🏗️ **State Management**: Provider
+- 💾 **Penyimpanan Lokal**: SharedPreferences (Local Cache)
+- 🌐 **Backend API**: Google Apps Script (Web App)
+- 📊 **Database**: Google Sheets
+
+---
+
+## 📖 Panduan Setup Backend (Google Apps Script)
 
 1. Buat Spreadsheet baru di Google Sheets.
 2. Buka menu **Extensions > Apps Script**.
@@ -41,7 +49,7 @@ Aplikasi manajemen dan pencatatan keuangan pribadi berbasis Flutter dengan backe
 
 ---
 
-## 📱 Cara Menjalankan Aplikasi
+## ▶️ Cara Menjalankan Aplikasi
 
 1. Clone repositori ini:
    ```bash
