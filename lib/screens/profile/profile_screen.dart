@@ -283,37 +283,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
               onPressed: _confirmLogout,
             ),
             const SizedBox(height: 32),
-
-            // Logo & Versi Aplikasi (Radius 20)
-            Center(
-              child: Column(
-                children: [
-                  Container(
-                    width: 44,
-                    height: 44,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(20),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withValues(alpha: 0.06),
-                          blurRadius: 10,
-                          offset: const Offset(0, 3),
-                        ),
-                      ],
-                    ),
-                    clipBehavior: Clip.antiAlias,
-                    child: Image.asset('assets/images/logo.jpg', fit: BoxFit.cover),
-                  ),
-                  const SizedBox(height: 8),
-                  const Text(
-                    'Si Catat v1.0.0',
-                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: AppTheme.textMuted),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 24),
           ],
         ),
       ),

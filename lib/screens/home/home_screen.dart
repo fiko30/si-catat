@@ -3,7 +3,6 @@ import '../../models/transaction_model.dart';
 import '../../providers/transaction_provider.dart';
 import '../../utils/app_theme.dart';
 import '../../utils/currency_formatter.dart';
-import '../../utils/transaction_icon_helper.dart';
 import '../transaction/add_edit_transaction_screen.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -76,14 +75,9 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 16),
-              _buildDetailRow(
-                'Sumber',
-                item.source,
-                icon: TransactionIconHelper.getIcon(item.source, item.isIncome),
-                iconColor: item.isIncome ? AppTheme.incomeColor : AppTheme.expenseColor,
-              ),
-              _buildDetailRow('Tanggal', CurrencyFormatter.formatDate(item.transactionDate), icon: Icons.calendar_today_outlined),
-              if (item.description.isNotEmpty) _buildDetailRow('Keterangan', item.description, icon: Icons.notes_outlined),
+              _buildDetailRow('Sumber', item.source),
+              _buildDetailRow('Tanggal', CurrencyFormatter.formatDate(item.transactionDate)),
+              if (item.description.isNotEmpty) _buildDetailRow('Keterangan', item.description),
               const SizedBox(height: 24),
               Row(
                 children: [
@@ -131,23 +125,19 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildDetailRow(String label, String value, {IconData? icon, Color? iconColor}) {
+  Widget _buildDetailRow(String label, String value) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6.0),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            width: 110,
+            width: 120,
             child: Text(
               label,
               style: const TextStyle(fontSize: 13, color: AppTheme.textMuted),
             ),
           ),
-          if (icon != null) ...[
-            Icon(icon, size: 16, color: iconColor ?? AppTheme.textMuted),
-            const SizedBox(width: 8),
-          ],
           Expanded(
             child: Text(
               value,
@@ -211,48 +201,21 @@ class HomeScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Top Bar: User Greeting dengan Logo Si Catat (Radius 20)
-                    Row(
+                    // Top Bar: User Greeting
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Container(
-                          width: 48,
-                          height: 48,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(20),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withValues(alpha: 0.08),
-                                blurRadius: 10,
-                                offset: const Offset(0, 3),
-                              ),
-                            ],
-                          ),
-                          clipBehavior: Clip.antiAlias,
-                          child: Image.asset(
-                            'assets/images/logo.jpg',
-                            fit: BoxFit.cover,
-                          ),
+                        const Text(
+                          'Selamat Datang',
+                          style: TextStyle(fontSize: 13, color: AppTheme.textMuted),
                         ),
-                        const SizedBox(width: 14),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text(
-                                'Selamat Datang',
-                                style: TextStyle(fontSize: 13, color: AppTheme.textMuted),
-                              ),
-                              const SizedBox(height: 2),
-                              Text(
-                                user?.name ?? 'Pengguna',
-                                style: const TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w700,
-                                  color: AppTheme.textDark,
-                                ),
-                              ),
-                            ],
+                        const SizedBox(height: 2),
+                        Text(
+                          user?.name ?? 'Pengguna',
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w700,
+                            color: AppTheme.textDark,
                           ),
                         ),
                       ],
@@ -605,9 +568,9 @@ class HomeScreen extends StatelessWidget {
                                       borderRadius: BorderRadius.circular(12),
                                     ),
                                     child: Icon(
-                                      TransactionIconHelper.getIcon(item.source, isIncome),
+                                      isIncome ? Icons.arrow_downward : Icons.arrow_upward,
                                       color: isIncome ? AppTheme.incomeColor : AppTheme.expenseColor,
-                                      size: 22,
+                                      size: 20,
                                     ),
                                   ),
                                   const SizedBox(width: 14),
