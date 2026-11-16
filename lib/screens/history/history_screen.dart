@@ -3,6 +3,7 @@ import '../../models/transaction_model.dart';
 import '../../providers/transaction_provider.dart';
 import '../../utils/app_theme.dart';
 import '../../utils/currency_formatter.dart';
+import '../../utils/transaction_icon_helper.dart';
 import '../transaction/add_edit_transaction_screen.dart';
 
 class HistoryScreen extends StatefulWidget {
@@ -317,9 +318,14 @@ class _HistoryScreenState extends State<HistoryScreen> {
                 ),
               ),
               const SizedBox(height: 16),
-              _buildDetailRow('Sumber', item.source),
-              _buildDetailRow('Tanggal', CurrencyFormatter.formatDate(item.transactionDate)),
-              if (item.description.isNotEmpty) _buildDetailRow('Keterangan', item.description),
+              _buildDetailRow(
+                'Sumber',
+                item.source,
+                icon: TransactionIconHelper.getIcon(item.source, item.isIncome),
+                iconColor: item.isIncome ? AppTheme.incomeColor : AppTheme.expenseColor,
+              ),
+              _buildDetailRow('Tanggal', CurrencyFormatter.formatDate(item.transactionDate), icon: Icons.calendar_today_outlined),
+              if (item.description.isNotEmpty) _buildDetailRow('Keterangan', item.description, icon: Icons.notes_outlined),
               const SizedBox(height: 24),
               Row(
                 children: [
@@ -367,19 +373,23 @@ class _HistoryScreenState extends State<HistoryScreen> {
     );
   }
 
-  Widget _buildDetailRow(String label, String value) {
+  Widget _buildDetailRow(String label, String value, {IconData? icon, Color? iconColor}) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6.0),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SizedBox(
-            width: 120,
+            width: 110,
             child: Text(
               label,
               style: const TextStyle(fontSize: 13, color: AppTheme.textMuted),
             ),
           ),
+          if (icon != null) ...[
+            Icon(icon, size: 16, color: iconColor ?? AppTheme.textMuted),
+            const SizedBox(width: 8),
+          ],
           Expanded(
             child: Text(
               value,
@@ -623,9 +633,9 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                         borderRadius: BorderRadius.circular(12),
                                       ),
                                       child: Icon(
-                                        isIncome ? Icons.arrow_downward : Icons.arrow_upward,
+                                        TransactionIconHelper.getIcon(item.source, isIncome),
                                         color: isIncome ? AppTheme.incomeColor : AppTheme.expenseColor,
-                                        size: 20,
+                                        size: 22,
                                       ),
                                     ),
                                     const SizedBox(width: 14),

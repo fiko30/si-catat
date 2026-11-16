@@ -184,18 +184,42 @@ class _RegisterScreenState extends State<RegisterScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const Text(
-                  'Daftar Akun Baru',
-                  style: TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.w700,
-                    color: AppTheme.textDark,
+                Center(
+                  child: Container(
+                    width: 72,
+                    height: 72,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withValues(alpha: 0.08),
+                          blurRadius: 15,
+                          offset: const Offset(0, 5),
+                        ),
+                      ],
+                    ),
+                    clipBehavior: Clip.antiAlias,
+                    child: Image.asset('assets/images/logo.jpg', fit: BoxFit.cover),
+                  ),
+                ),
+                const SizedBox(height: 18),
+                const Center(
+                  child: Text(
+                    'Daftar Akun Baru',
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.w700,
+                      color: AppTheme.textDark,
+                    ),
                   ),
                 ),
                 const SizedBox(height: 6),
-                const Text(
-                  'Mulai catat transaksi harianmu dengan rapi',
-                  style: TextStyle(fontSize: 14, color: AppTheme.textMuted),
+                const Center(
+                  child: Text(
+                    'Mulai catat transaksi harianmu dengan rapi',
+                    style: TextStyle(fontSize: 14, color: AppTheme.textMuted),
+                  ),
                 ),
                 const SizedBox(height: 24),
 

@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import '../../models/transaction_model.dart';
 import '../../providers/transaction_provider.dart';
 import '../../utils/app_theme.dart';
+import '../../utils/transaction_icon_helper.dart';
 
 class ThousandsSeparatorInputFormatter extends TextInputFormatter {
   static final NumberFormat _formatter = NumberFormat('#,###', 'id_ID');
@@ -57,9 +58,14 @@ class _AddEditTransactionScreenState extends State<AddEditTransactionScreen> {
   late DateTime _selectedDate;
   bool _isLoading = false;
 
+  void _onSourceChanged() {
+    setState(() {});
+  }
+
   @override
   void initState() {
     super.initState();
+    _sourceController.addListener(_onSourceChanged);
     if (widget.itemToEdit != null) {
       _type = widget.itemToEdit!.type;
       _sourceController.text = widget.itemToEdit!.source;
@@ -79,6 +85,7 @@ class _AddEditTransactionScreenState extends State<AddEditTransactionScreen> {
 
   @override
   void dispose() {
+    _sourceController.removeListener(_onSourceChanged);
     _sourceController.dispose();
     _amountController.dispose();
     _descController.dispose();
@@ -371,13 +378,65 @@ class _AddEditTransactionScreenState extends State<AddEditTransactionScreen> {
               TextFormField(
                 controller: _sourceController,
                 decoration: InputDecoration(
-                  hintText: isIncome ? 'Masukkan Sumber Pemasukan' : 'Masukkan Sumber Pengeluaran',
-                  prefixIcon: Icon(isIncome ? Icons.account_balance_wallet_outlined : Icons.shopping_bag_outlined),
+                  hintText: isIncome ? 'Masukkan Sumber Pemasukan (misal: Gaji, Bonus)' : 'Masukkan Sumber Pengeluaran (misal: Makanan, Bensin)',
+                  prefixIcon: Icon(
+                    TransactionIconHelper.getIcon(
+                      _sourceController.text.isNotEmpty ? _sourceController.text : (isIncome ? 'gaji' : 'belanja'),
+                      isIncome,
+                    ),
+                    color: activeColor,
+                  ),
                 ),
                 validator: (val) {
                   if (val == null || val.trim().isEmpty) return 'Sumber wajib diisi';
                   return null;
                 },
+              ),
+              const SizedBox(height: 10),
+              // Pilihan Cepat Kategori Sesuai Kata & Icon Relevan (Radius 20)
+              Wrap(
+                spacing: 8,
+                runSpacing: 8,
+                children: (isIncome
+                        ? ['Gaji', 'Bonus', 'Freelance', 'Investasi', 'Hadiah', 'Penjualan']
+                        : ['Makanan', 'Minuman', 'Belanja', 'Bensin', 'Transport', 'Tagihan', 'Hiburan', 'Kesehatan', 'Sedekah'])
+                    .map((cat) {
+                  final isSelected = _sourceController.text.trim().toLowerCase() == cat.toLowerCase();
+                  final icon = TransactionIconHelper.getIcon(cat, isIncome);
+                  return InkWell(
+                    onTap: () {
+                      _sourceController.text = cat;
+                    },
+                    borderRadius: BorderRadius.circular(20),
+                    child: AnimatedContainer(
+                      duration: const Duration(milliseconds: 150),
+                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
+                      decoration: BoxDecoration(
+                        color: isSelected ? activeColor.withValues(alpha: 0.15) : Colors.grey.shade100,
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(
+                          color: isSelected ? activeColor : Colors.grey.shade300,
+                          width: isSelected ? 1.5 : 1,
+                        ),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(icon, size: 15, color: isSelected ? activeColor : AppTheme.textMuted),
+                          const SizedBox(width: 6),
+                          Text(
+                            cat,
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
+                              color: isSelected ? activeColor : AppTheme.textDark,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                }).toList(),
               ),
               const SizedBox(height: 20),
 
